@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'answer.dart';
+import 'question.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -7,22 +10,22 @@ void main() {
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return _MyAppState();
   }
 }
 
-class MyAppState extends State<MyApp> {
-  var questionIndex = 0;
+class _MyAppState extends State<MyApp> {
+  var _questionIndex = 0;
 
-  void answerQuestion() {
+  void _answerQuestion() {
     setState(() {
-      questionIndex = questionIndex + 1;
-      if (questionIndex >= 2) {
-        questionIndex = 0;
+      _questionIndex = _questionIndex + 1;
+      if (_questionIndex >= 2) {
+        _questionIndex = 0;
       }
     });
 
-    print(questionIndex);
+    print(_questionIndex);
   }
 
   @override
@@ -30,18 +33,15 @@ class MyAppState extends State<MyApp> {
     var questions = ['what is going on', 'the color is blue'];
     return MaterialApp(
       title: 'Hello world!',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
       home: Scaffold(
           appBar: AppBar(
             title: Text("This is the app."),
           ),
           body: Column(children: <Widget>[
-            Text(questions[questionIndex]),
-            RaisedButton(child: Text('Answer 1'), onPressed: answerQuestion),
-            RaisedButton(child: Text('Answer 2'), onPressed: answerQuestion),
+            Question(questions[_questionIndex]),
+            Answer(_answerQuestion, 'Answer 1'),
+            Answer(_answerQuestion, 'Answer 2'),
+            Answer(_answerQuestion, 'Answer 3'),
           ])),
     );
   }
