@@ -1,14 +1,20 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/quiz.dart';
 import 'package:learn_flutter/result.dart';
+import 'package:learn_flutter/models/transaction.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  final List<Transaction> transactions = [
+    Transaction(id: '1', title: 'shoes', amount: 9.99, date: DateTime.now()),
+    Transaction(
+        id: '2', title: 'groceries', amount: 300.54, date: DateTime.now())
+  ];
+
   @override
   State<StatefulWidget> createState() {
     return _MyAppState();
@@ -59,7 +65,8 @@ class _MyAppState extends State<MyApp> {
         title: 'Hello world!',
         home: Scaffold(
             appBar: AppBar(
-              title: Text("This is the app."),
+              title: Text(
+                  "Today's date: ${DateFormat('M/d/y').format(DateTime.now())}"),
             ),
             body: _questionIndex < _questions.length
                 ? Quiz(

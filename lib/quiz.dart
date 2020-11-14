@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:learn_flutter/widgets/transaction_list.dart';
+import 'package:learn_flutter/widgets/user_transactions.dart';
 import 'answer.dart';
 import 'question.dart';
 
@@ -15,6 +17,7 @@ class Quiz extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
+      UserTransactions(),
       Question(questions[questionIndex]['questionText']),
       ...(questions[questionIndex]['answers'] as List<Map<String, Object>>)
           .map((answer) {
