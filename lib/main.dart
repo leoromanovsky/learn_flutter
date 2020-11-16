@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/models/transaction.dart';
 import 'package:intl/intl.dart';
+import 'package:learn_flutter/widgets/chart.dart';
 import 'package:learn_flutter/widgets/new_transaction.dart';
 import 'package:learn_flutter/widgets/transaction_list.dart';
 
@@ -23,11 +24,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final List<Transaction> _userTransactions = [
-    /*
     Transaction(id: '1', title: 'grocery', amount: 9.99, date: DateTime.now()),
     Transaction(id: '2', title: 'car', amount: 5.00, date: DateTime.now()),
     Transaction(id: '3', title: 'bank', amount: 7.00, date: DateTime.now())
-    */
   ];
 
   void _addNewTransaction(String title, double amount) {
@@ -54,6 +53,13 @@ class _MyAppState extends State<MyApp> {
         });
   }
 
+  List<Transaction> get _recentTransactions {
+    return _userTransactions
+        .where((element) =>
+            element.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -76,6 +82,10 @@ class _MyAppState extends State<MyApp> {
                       child: Icon(Icons.add),
                       onPressed: () => _startAddNewTransaction(context),
                     )),
-            body: TransactionList(_userTransactions)));
+            body: SingleChildScrollView(
+                child: Column(children: [
+              Chart(_recentTransactions),
+              TransactionList(_userTransactions)
+            ]))));
   }
 }
