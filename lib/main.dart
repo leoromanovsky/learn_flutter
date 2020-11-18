@@ -29,15 +29,21 @@ class _MyAppState extends State<MyApp> {
     Transaction(id: '3', title: 'bank', amount: 7.00, date: DateTime.now())
   ];
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime chosenData) {
     final newTx = Transaction(
         id: DateTime.now().toString(),
         title: title,
         amount: amount,
-        date: DateTime.now());
+        date: chosenData);
 
     setState(() {
       _userTransactions.insert(0, newTx);
+    });
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((element) => element.id == id);
     });
   }
 
@@ -85,7 +91,7 @@ class _MyAppState extends State<MyApp> {
             body: SingleChildScrollView(
                 child: Column(children: [
               Chart(_recentTransactions),
-              TransactionList(_userTransactions)
+              TransactionList(_userTransactions, _deleteTransaction)
             ]))));
   }
 }
